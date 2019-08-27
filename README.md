@@ -10,13 +10,13 @@ Make a chaincode for adding product details, you can choose your own product,
 And add private collections for both Retailer1, Distributor1, Shipment Agency1 and Retailer2, Distributor2, Shipment Agency2 
 
 Acl(Access control list) using chaincode about products:
+# Details
 
+                          Manufacturer    Retailer        Distributor     Shipment Agency 
 
-                  Manufacturer    Retailer        Distributor     Shipment Agency 
+        CreateProduct           Yes             No              No              No
 
-CreateProduct           Yes             No              No              No
-
-Read Product Details    Yes             Yes             Yes             Yes
+        Read Product Details    Yes             Yes             Yes             Yes
 
 
 *** Retailer1, Distributor1, Shippment Agency1 cant read data of Retailers2, Distributors2, Shipment Agency 2
