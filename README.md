@@ -12,7 +12,7 @@ And add private collections for both Retailer1, Distributor1, Shipment Agency1 a
 Acl(Access control list) using chaincode about products:
 
 
-#                  Manufacturer    Retailer        Distributor     Shipment Agency 
+                  Manufacturer    Retailer        Distributor     Shipment Agency 
 
 CreateProduct           Yes             No              No              No
 
