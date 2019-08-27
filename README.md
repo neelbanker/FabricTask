@@ -1,4 +1,4 @@
-# FabricTask
+# Hyperledger Fabric Task
 Make a Hyperledger network with:
 You can choose your own architecture, but please write down clear explanation for choosing the architecture that you will choose, 
 And free to make any assumptions
@@ -12,23 +12,12 @@ And add private collections for both Retailer1, Distributor1, Shipment Agency1 a
 Acl(Access control list) using chaincode about products:
 
 
+#                  Manufacturer    Retailer        Distributor     Shipment Agency 
 
+CreateProduct           Yes             No              No              No
 
+Read Product Details    Yes             Yes             Yes             Yes
 
-Manufacturer
-Retailer
-Distributor
-Shipment Agency
-Create Product
-Yes
-No
-No
-No
-Read Product Details ***
-Yes
-Yes
-Yes
-Yes
 
 *** Retailer1, Distributor1, Shippment Agency1 cant read data of Retailers2, Distributors2, Shipment Agency 2
 
