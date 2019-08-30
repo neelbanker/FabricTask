@@ -6,7 +6,22 @@
 version: '2'
 
 services:
+  
+  ca.product.com:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.product.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.product.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e27c2834eae10dc902e8d5971ed260ad6080b35c167265e7e7e47c93fd6937d2_sk
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ../crypto-config/peerOrganizations/manufacturer.product.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.product.com
+    ports:
+      - "7054:7054"
 
+  
   orderer.product.com:
     container_name: orderer.product.com
     extends:

@@ -459,7 +459,7 @@ function generateChannelArtifacts() {
   echo "### Generating channel configuration transaction 'channel.tx' ###"
   echo "#################################################################"
   set -x
-  configtxgen -profile FourOrgsChannel -outputCreateChannelTx ./channel-artifacts/taskchannel.tx -channelID $CHANNEL_NAME
+  configtxgen -profile FourOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -538,7 +538,7 @@ CLI_DELAY=3
 # system channel name defaults to "byfn-sys-channel"
 SYS_CHANNEL="byfn-sys-channel"
 # channel name defaults to "mychannel"
-CHANNEL_NAME="taskchannel"
+CHANNEL_NAME="channel"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose-cli.yaml
 #

@@ -1,5 +1,12 @@
 echo "################## Bringing Network Down ###########################"
-./byfn.sh down
+docker ps -a
+
+
+echo "================================================================="
+echo "Stopping all running containers"
+echo "================================================================="
+# Stop all the running containers
+docker stop $(docker ps -aq)
 
 echo "################## Bringing Dockers Down ###########################"
 docker rm -f $(docker ps -aq)
@@ -7,6 +14,8 @@ docker rm -f $(docker ps -aq)
 echo "################## Removing Channel Artifacts ###########################"
 rm -rf channel-artifacts
 
+#echo "################## Removing Crypto Config ###########################"
+#sudo rm -rf crypto-config
 
 echo "################## Docker Network Prune ###########################"
 docker network prune
@@ -19,3 +28,12 @@ docker system prune
 
 echo "################## Remaking Channel Artifacts Folder ########################"
 mkdir channel-artifacts
+
+docker rmi -f $(docker images | grep peer[0-9]-peer[0-9] | awk '{print $3}')
+rm -rf ./hfc-key-store
+rm -rf ./hfc-key-store2
+#rm -rf ./mychannel.block
+clear
+ls
+docker ps -a
+docker images

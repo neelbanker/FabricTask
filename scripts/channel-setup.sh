@@ -16,7 +16,7 @@ export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric
 
 echo "###################### Creating Channel Environment ######################"
 export CHANNEL_NAME=mychannel
-
+echo $CHANNEL_NAME
 echo "#################### Creating Orderer ##########################"
 peer channel create -o orderer.product.com:7050 -c $CHANNEL_NAME -f ../channel-artifacts/channel.tx
 

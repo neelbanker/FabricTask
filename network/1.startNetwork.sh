@@ -1,9 +1,9 @@
 echo "############# Starting Your Network #################################"
 echo ""
 
-echo "######### Generating Crypto Artifacts ###############################"
-../bin/cryptogen generate --config=./crypto-config.yaml
-echo ""
+# echo "######### Generating Crypto Artifacts ###############################"
+# ../bin/cryptogen generate --config=./crypto-config.yaml
+# echo " \n"
 
 echo "############### Exporting Fabric Configration Path ##################"
 export FABRIC_CFG_PATH=$PWD
@@ -35,8 +35,9 @@ echo ""
 echo ""
 
 echo "########################## Starting Your Network ########################"
-docker-compose -f docker-compose-cli.yaml up -d
-
+#docker-compose -f docker-compose-cli.yaml up -d
+docker-compose -f docker-compose-cli.yaml -f docker-compose-couch.yaml up -d
+#docker-compose -f docker-compose-ca.yaml up -d
 
 
 
