@@ -1,6 +1,6 @@
 [
  {
-   "name": "collectionMarbles",
+   "name": "collectionProducts",
    "policy": "OR('ManufacturerMSP.member', 'RetailerMSP.member')",
    "requiredPeerCount": 0,
    "maxPeerCount": 3,
@@ -8,7 +8,7 @@
    "memberOnlyRead": true
 },
  {
-   "name": "collectionMarblePrivateDetails",
+   "name": "collectionProductPrivateDetails",
    "policy": "OR('ManufacturerMSP.member')",
    "requiredPeerCount": 0,
    "maxPeerCount": 3,

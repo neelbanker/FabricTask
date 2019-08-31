@@ -1,3 +1,3 @@
 git add *
 git commit -m "Updates"
-git push -u origin master
+echo "neelbanker"|git push -u origin master
