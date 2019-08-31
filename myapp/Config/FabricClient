@@ -54,7 +54,7 @@ class FBClient extends FabricClient {
                         resolve({ event_status: 'TIMEOUT' });
                     }, 3000);
                     event_hub.connect();
-
+                    
                     event_hub.registerTxEvent(transaction_id_string, (tx, code) => {
                         clearTimeout(handle);
                         event_hub.unregisterTxEvent(transaction_id_string);
@@ -113,7 +113,7 @@ class FBClient extends FabricClient {
                     }
                 })
             }
-
+            
             return resultData;
         });
     }

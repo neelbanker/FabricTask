@@ -7,7 +7,7 @@ client:
     path: "./hfc-key-store"
     cryptoStore:
       path: "./hfc-key-store"
-
+      
 channels:
   mychannel:
     orderers:
