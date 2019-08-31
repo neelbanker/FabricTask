@@ -1,3 +1,3 @@
 git add *
-git commit -m "Updates"
-echo "neelbanker"|git push -u origin master
+git commit -m "Updated on "date" by Neel Banker"
+git push -u origin master
