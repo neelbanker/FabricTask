@@ -1,57 +1,19 @@
 [
-    {
-        "name": "collectionProducts",
-        "policy": {
-            "identities": [
-                {
-                    "role": {
-                        "name": "member",
-                        "mspId": "ManufacturerMSP"
-                    }
-                },
-                {
-                    "role": {
-                        "name": "member",
-                        "mspId": "RetailerMSP"
-                    }
-                }
-            ],
-            "policy": {
-                "1-of": [
-                    {
-                        "signed-by": 0
-                    },
-                    {
-                        "signed-by": 1
-                    }
-                ]
-            }
-        },
-        "requiredPeerCount": 1,
-        "maxPeerCount": 2,
-        "blockToLive": 100
-    },
-    {
-        "name": "collectionProductPrivateDetails",
-        "policy": {
-            "identities": [
-                {
-                    "role": {
-                        "name": "member",
-                        "mspId": "ManufacturerMSP"
-                    }
-                }
-            ],
-            "policy": {
-                "1-of": [
-                    {
-                        "signed-by": 0
-                    }
-                ]
-            }
-        },
-        "requiredPeerCount": 1,
-        "maxPeerCount": 1,
-        "blockToLive": 100
-    }
-]
+  {
+    "name": "collectionProducts",
+    "policy": "OR('ManufacturerMSP.member', 'RetailerMSP.member', 'DistributorMSP.member', 'AgencyMSP.member')",
+    "requiredPeerCount": 0,
+    "maxPeerCount": 3,
+    "blockToLive":1000000,
+    "memberOnlyRead": true
+ },
+  {
+    "name": "collectionProductPrivateDetails",
+    "policy": "OR('ManufacturerMSP.member')",
+    "requiredPeerCount": 0,
+    "maxPeerCount": 3,
+    "blockToLive":3,
+    "memberOnlyRead": true
+  }
+ ]
+ 

@@ -13,7 +13,7 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.product.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.product.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e27c2834eae10dc902e8d5971ed260ad6080b35c167265e7e7e47c93fd6937d2_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a926fbe2a4e24906b06fda2c74cc6e56f3825ba6a5eb4ba3e2ecb97fb8ee7e13_sk
     command: sh -c 'fabric-ca-server start -b admin:adminpw'
     volumes:
       - ../crypto-config/peerOrganizations/manufacturer.product.com/ca/:/etc/hyperledger/fabric-ca-server-config

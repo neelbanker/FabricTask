@@ -30,10 +30,12 @@ echo "################## Remaking Channel Artifacts Folder #####################
 mkdir channel-artifacts
 
 docker rmi -f $(docker images | grep peer[0-9]-peer[0-9] | awk '{print $3}')
-rm -rf ./hfc-key-store
+
 rm -rf ./hfc-key-store2
 #rm -rf ./mychannel.block
 clear
 ls
 docker ps -a
 docker images
+
+echo "welcome7" | sudo rm -rf ../../../../.hfc-key-store

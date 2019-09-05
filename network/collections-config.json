@@ -1,0 +1,19 @@
+[
+  {
+    "name": "collectionProducts",
+    "policy": "OR('ManufacturerMSP.member', 'RetailerMSP.member')",
+    "requiredPeerCount": 0,
+    "maxPeerCount": 3,
+    "blockToLive":1000000,
+    "memberOnlyRead": true
+ },
+  {
+    "name": "collectionProductPrivateDetails",
+    "policy": "OR('ManufacturerMSP.member')",
+    "requiredPeerCount": 0,
+    "maxPeerCount": 3,
+    "blockToLive":3,
+    "memberOnlyRead": true
+  }
+ ]
+ 

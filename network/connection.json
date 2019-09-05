@@ -1,0 +1,52 @@
+{
+    "name": "deployment-byfn",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Manufacturer",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "firstchannel": {
+            "orderers": [
+                "orderer.product.com"
+            ],
+            "peers": {
+                "peer0.manufacturer.product.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "Manufacturer": {
+            "mspid": "ManufacturerMSP",
+            "peers": [
+                "peer0.manufacturer.product.com"
+            ],
+            "certificateAuthorities": [
+                "ca.product.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer.product.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+    "peers": {
+        "peer0.manufacturer.product.com": {
+            "url": "grpc://localhost:7051"
+        }
+    },
+    "certificateAuthorities": {
+        "ca.product.com": {
+            "url": "http://localhost:7054",
+            "caName": "ca.product.com"
+        }
+    }
+}

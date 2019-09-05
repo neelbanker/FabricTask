@@ -1,5 +1,5 @@
 # only generate if they are not there
-#../bin/cryptogen generate --config=./crypto-config.yaml
+../bin/cryptogen generate --config=./crypto-config.yaml
 
 export FABRIC_CFG_PATH=$PWD
 
@@ -29,8 +29,8 @@ peer channel join -b mychannel.block
 #peer0 chaincode
 peer channel update -o orderer.product.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/ManufacturerMSPanchors.tx 
 
-peer chaincode install -n task -v 1.0 -p github.com/chaincode/taskchaincode/go
-peer chaincode instantiate -o orderer.product.com:7050 -C mychannel -n task -v 1.0 -c '{"Args":["init"]}' -P "OR('ManufacturerMSP.member','RetailerMSP.member')" --collections-config  $GOPATH/src/github.com/chaincode/taskchaincode/collections_config.json
+peer chaincode install -n taskchaincode -v 1.0 -p github.com/chaincode/taskchaincode/go
+peer chaincode instantiate -o orderer.product.com:7050 -C mychannel -n taskchaincode -v 1.0 -c '{"Args":["init"]}' -P "OR('ManufacturerMSP.member','RetailerMSP.member')" --collections-config  $GOPATH/src/github.com/chaincode/taskchaincode/collections_config.json
 
 #Env for manufacturer peer1
 export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.product.com/users/Admin@manufacturer.product.com/msp
@@ -99,14 +99,14 @@ peer channel update -o orderer.product.com:7050 -c $CHANNEL_NAME -f ../channel-a
 
 
 ############chaincode install and query
-peer chaincode install -n task -v 1.0 -p github.com/chaincode/taskchaincode/go
+peer chaincode install -n taskchaincode -v 1.0 -p github.com/chaincode/taskchaincode/go
 
-peer chaincode instantiate -o orderer.product.com:7050 -C mychannel -n task -v 1.0 -c '{"Args":["init"]}' -P "OR('ManufacturerMSP.member','RetailerMSP.member')" --collections-config  $GOPATH/src/github.com/chaincode/taskchaincode/collections_config.json
+peer chaincode instantiate -o orderer.product.com:7050 -C mychannel -n taskchaincode -v 1.0 -c '{"Args":["init"]}' -P "OR('ManufacturerMSP.member','RetailerMSP.member')" --collections-config  $GOPATH/src/github.com/chaincode/taskchaincode/collections_config.json
 
 export PRODUCT=$(echo -n "{\"name\":\"product1\",\"color\":\"blue\",\"size\":35,\"owner\":\"neel\",\"price\":99}" | base64 | tr -d \\n)
 
-peer chaincode invoke -o orderer.product.com:7050 -C mychannel -n task -c '{"Args":["initProduct"]}'  --transient "{\"product\":\"$PRODUCT\"}"
+peer chaincode invoke -o orderer.product.com:7050 -C mychannel -n taskchaincode -c '{"Args":["initProduct"]}'  --transient "{\"product\":\"$PRODUCT\"}"
 
-peer chaincode query -C mychannel -n task -c '{"Args":["readProduct","product1"]}'
+peer chaincode query -C mychannel -n taskchaincode -c '{"Args":["readProduct","product1"]}'
 
-peer chaincode query -C mychannel -n task -c '{"Args":["readProductPrivateDetails","product1"]}'
+peer chaincode query -C mychannel -n taskchaincode -c '{"Args":["readProductPrivateDetails","product1"]}'
