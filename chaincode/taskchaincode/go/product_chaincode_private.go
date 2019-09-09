@@ -108,7 +108,7 @@ type product struct {
 	ObjectType string `json:"docType"` //docType is used to distinguish the various types of objects in state database
 	Name       string `json:"name"`    //the fieldtags are needed to keep case from bouncing around
 	Color      string `json:"color"`
-	Size       int    `json:"size"`
+	Quantity   int    `json:"quantity"`
 	Owner      string `json:"owner"`
 }
 
@@ -180,11 +180,11 @@ func (t *SimpleChaincode) initProduct(stub shim.ChaincodeStubInterface, args []s
 	var err error
 
 	type productTransientInput struct {
-		Name  string `json:"name"` //the fieldtags are needed to keep case from bouncing around
-		Color string `json:"color"`
-		Size  int    `json:"size"`
-		Owner string `json:"owner"`
-		Price int    `json:"price"`
+		Name     string `json:"name"` //the fieldtags are needed to keep case from bouncing around
+		Color    string `json:"color"`
+		Quantity int    `json:"quantity"`
+		Owner    string `json:"owner"`
+		Price    int    `json:"price"`
 	}
 
 	// ==== Input sanitation ====
@@ -219,8 +219,8 @@ func (t *SimpleChaincode) initProduct(stub shim.ChaincodeStubInterface, args []s
 	if len(productInput.Color) == 0 {
 		return shim.Error("color field must be a non-empty string")
 	}
-	if productInput.Size <= 0 {
-		return shim.Error("size field must be a positive integer")
+	if productInput.Quantity <= 0 {
+		return shim.Error("quantity field must be a positive integer")
 	}
 	if len(productInput.Owner) == 0 {
 		return shim.Error("owner field must be a non-empty string")
@@ -243,7 +243,7 @@ func (t *SimpleChaincode) initProduct(stub shim.ChaincodeStubInterface, args []s
 		ObjectType: "product",
 		Name:       productInput.Name,
 		Color:      productInput.Color,
-		Size:       productInput.Size,
+		Quantity:   productInput.Quantity,
 		Owner:      productInput.Owner,
 	}
 	productJSONasBytes, err := json.Marshal(product)

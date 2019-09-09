@@ -103,7 +103,7 @@ peer chaincode install -n taskchaincode -v 1.0 -p github.com/chaincode/taskchain
 
 peer chaincode instantiate -o orderer.product.com:7050 -C mychannel -n taskchaincode -v 1.0 -c '{"Args":["init"]}' -P "OR('ManufacturerMSP.member','RetailerMSP.member')" --collections-config  $GOPATH/src/github.com/chaincode/taskchaincode/collections_config.json
 
-export PRODUCT=$(echo -n "{\"name\":\"product1\",\"color\":\"blue\",\"size\":35,\"owner\":\"neel\",\"price\":99}" | base64 | tr -d \\n)
+export PRODUCT=$(echo -n "{\"name\":\"product1\",\"color\":\"blue\",\"quantity\":35,\"owner\":\"neel\",\"price\":99}" | base64 | tr -d \\n)
 
 peer chaincode invoke -o orderer.product.com:7050 -C mychannel -n taskchaincode -c '{"Args":["initProduct"]}'  --transient "{\"product\":\"$PRODUCT\"}"
 

@@ -38,4 +38,4 @@ ls
 docker ps -a
 docker images
 
-echo "welcome7" | sudo rm -rf ../../../../.hfc-key-store
+rm -rf ../../../../.hfc-key-store

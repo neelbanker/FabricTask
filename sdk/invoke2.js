@@ -1,74 +1,76 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- */
+* SPDX-License-Identifier: Apache-2.0
+*/
 
 'use strict';
 
 const { FileSystemWallet, Gateway } = require('fabric-network');
+const fs = require('fs');
 const path = require('path');
+const base64 = require('base-64');
+const utf8 = require('utf8');
 
-const ccpPath = path.resolve(__dirname,'..', 'network', 'connection.json')
-
+const ccpPath = path.resolve(__dirname, '..', '..', 'task-network', 'connection.json');
+const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
+const ccp = JSON.parse(ccpJSON);
+const buffer = require('buffer').Buffer
 async function main() {
-    try {
+try {
 
-        // Create a new file system based wallet for managing identities.
-    const walletPath = path.resolve(__dirname,'..', 'network', 'wallet')
-        const wallet = new FileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+// Create a new file system based wallet for managing identities.
+const walletPath = path.join(process.cwd(), 'wallet');
+console.log(walletPath);
+const wallet = new FileSystemWallet(walletPath);
+console.log(`Wallet path: ${walletPath}`);
 
-        // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists('admin');
-        if (!userExists) {
-            console.log('An identity for the user "admin" does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            return;
-        }
+// Check to see if we've already enrolled the user.
+const userExists = await wallet.exists('user1');
+if (!userExists) {
+console.log('An identity for the user "user1" does not exist in the wallet');
+console.log('Run the registerUser.js application before retrying');
+return;
+}
+console.log('hi2');
+// Create a new gateway for connecting to our peer node.
+const gateway = new Gateway();
+await gateway.connect(ccp, { wallet, identity: 'user1', discovery: { enabled: false } });
+console.log('hi1');
+// Get the network (channel) our contract is deployed to.
+const network = await gateway.getNetwork('mychannel');
+console.log('hi3');
+// Get the contract from the network.
+const contract = network.getContract('task');
 
-        // Create a new gateway for connecting to our peer node.
-        const gateway = new Gateway();
-        await gateway.connect(ccpPath, { wallet, identity: 'admin', discovery: { enabled: true, asLocalhost: true } });
+// Submit the specified transaction.
+// createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
+// changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
 
-        // Get the network (channel) our contract is deployed to.
-        const network = await gateway.getNetwork('mychannel');
+// Private data sent as transient data: { [key: string]: Buffer 
 
-        // Get the contract from the network.
-        const contract = network.getContract('taskchaincode');
+var transientInput = {
+product: buffer.from("{\"name\":\"Sofa\",\"quantity\":8,\"price\":22000,\"owner\":\"steve\"}")
+// quantity: '4',
+// owner: 'Tom',
+// price: '35000'
+};
+let product = Buffer.from('\"name\":\"TV\",\"quantity\":4,\"price\":35000,\"owner\":\"tom\"','base64');
+console.log('Sending tx with transient', JSON.stringify(product));
+//transientData.productname=JSON.stringify(transientData.productname);
+//transientData=JSON.stringify(transientData)
+const result = await contract.createTransaction('initProduct1')
+.setTransient(transientInput)
+.submit();
 
-        // Submit the specified transaction.
-        // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
-        // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
-        var transient_data = {
-            'name': 'product', 
-            'color': 'blue', 
-            'size': 8, 
-            'owner': 'Joe', 
-            'price': 80 
-        };
-        var data = JSON.stringify(transient_data); // Convert transient data object to JSON string
-        data = new Buffer(data).toString('base64'); // convert the JSON string to base64 encoded string
-        var product_private = { "product": data };  //Add the encoded data as a value to the marble key expected by the marbles chaincode
-       // const tx_id = client.newTransactionID();
-        //tx_id_string = tx_id.getTransactionID();
-        var request = {
-            chaincodeId: 'product',
-          //  txId: tx_id,
-            fcn: 'initProduct',
-            args: [], // all data is transient data
-            transientMap: product_private, // private data
-        };
-        const result = await contract.createTransaction('initProduct')
-    .setTransient(request)
-    .submit();
-        console.log('Transaction has been submitted'+result);
+console.log('Transaction has been submitted');
 
-        // Disconnect from the gateway.
-        await gateway.disconnect();
+// Disconnect from the gateway.
+await gateway.disconnect();
 
-    } catch (error) {
-        console.error(`Failed to submit transaction: ${error}`);
-        process.exit(1);
-    }
+} catch (error) {
+console.log("inside catch")
+console.error(`Failed to submit transaction: ${error}`);
+process.exit(1);
+}
 }
 
 main();
